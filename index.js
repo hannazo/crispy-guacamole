@@ -2,6 +2,10 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generateHTML = require('./src/generateHTML');
 
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+const Manager = require('./lib/manager');
+
 teamArray = [];
 
 function init() {
@@ -55,7 +59,11 @@ function init() {
             }
         ])
         .then((data) => {
+            const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
+            teamArray.push(manager);
+
             console.log(`*** Added manager ${data.name} to the team ***\n`);
+
             addEmployee();
         })
     };
@@ -142,6 +150,7 @@ function init() {
         })
     };
 
+    // Add Intern details
     function addIntern() {
         inquirer.prompt([
             {
@@ -196,6 +205,7 @@ function init() {
         })
     };
 
+    // Write HTML file
     function writeToFile() {
         fs.writeFile('./dist/index.html', generateHTML(teamArray), (err) =>
         err ? console.log(err) : console.log('\nSuccess! HTML file has been created.')
