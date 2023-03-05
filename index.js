@@ -213,7 +213,6 @@ function init() {
 
     // Write HTML file
     function writeToFile() {
-        console.log(teamArray);
         fs.writeFile('./dist/index.html', generateHTML(teamArray), (err) =>
         err ? console.log(err) : console.log('\nSuccess! HTML file has been created.')
         )

@@ -13,7 +13,7 @@ function renderEmployeeCards(data) {
                     <div class="card-body bg-light rounded-bottom">
                         <ul class="list-group px-2 py-4">
                             <li class="list-group-item">ID: ${manager.getId()}</li>
-                            <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">jared@fakemail.com</a></li>
+                            <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
                             <li class="list-group-item">Office number: ${manager.getOfficeNumber()}</li>
                         </ul>
                     </div>
@@ -61,16 +61,27 @@ function renderEmployeeCards(data) {
             </div>`;
     };
 
-    const role = data.filter(employee => employee.getRole())
-    switch (role) {
-        case 'Manager':
-            forEach((manager) => {renderManager(manager)});
-            break;
-        default:
-            break;
+    // Filter by role and render each employee card
+   let generatedTeam = '';
+    for (i=0; i < data.length; i++) {
+        let role = data[i].getRole();
+        switch (role) {
+            case 'Manager':
+                generatedTeam += renderManager(data[i]);
+                break;
+            case 'Engineer':
+                generatedTeam += renderEngineer(data[i]);
+                break;
+            case 'Intern':
+                generatedTeam += renderIntern(data[i]);
+                break;
+            default:
+                break;
+        }
     }
-}
 
+    return generatedTeam;
+}
 
 function generateHTML(data) {
    return `
