@@ -75,7 +75,7 @@ function init() {
                 type: "list",
                 name: "role",
                 message: "Would you like to add an engineer or an intern to your team?",
-                choices: ["Engineer", "Intern", "No, my team is complete"]
+                choices: ["Engineer", "Intern", "Finish building my team"]
             }
         ])
             .then((data) => {
@@ -192,7 +192,7 @@ function init() {
             },
             {
                 type: "input",
-                name: "gitHub",
+                name: "school",
                 message: "What is the intern's school name?",
                 validate: answer => {
                     if (answer === '') {
@@ -203,6 +203,9 @@ function init() {
             }
         ])
         .then((data) => {
+            const intern = new Intern(data.name, data.id, data.email, data.school);
+            teamArray.push(intern);
+
             console.log(`*** Added intern ${data.name} to the team ***\n`);
             addEmployee();
         })
