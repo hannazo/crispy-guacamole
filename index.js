@@ -52,7 +52,7 @@ function init() {
                 message: "What is the team manager's office number?",
                 validate: answer => {
                     if (answer === '' || isNaN(answer)) {
-                        return console.log("Please enter manager's employee ID");
+                        return console.log("Please enter manager's office number");
                     }
                     return true;
                 }
@@ -145,6 +145,9 @@ function init() {
             }
         ])
         .then((data) => {
+            const engineer = new Engineer(data.name, data.id, data.email, data.gitHub);
+            teamArray.push(engineer);
+
             console.log(`*** Added engineer ${data.name} to the team ***\n`);
             addEmployee();
         })
@@ -207,6 +210,7 @@ function init() {
 
     // Write HTML file
     function writeToFile() {
+        console.log(teamArray);
         fs.writeFile('./dist/index.html', generateHTML(teamArray), (err) =>
         err ? console.log(err) : console.log('\nSuccess! HTML file has been created.')
         )
